@@ -1,4 +1,8 @@
-####READ DATA, THEN,
+####READ DATA, 
+
+ci <- readRDS('boot_out_dir/file.rds')
+
+####THEN,
 
 ci_dt <- data.table::rbindlist(unlist(ci, recursive = FALSE))
 ci_dt_l <- data.table::melt(ci_dt, id.vars = c('index', 'type'))
