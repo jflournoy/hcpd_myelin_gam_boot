@@ -22,6 +22,7 @@ if(Sys.getenv('HOME') != '/users/jflournoy' || Sys.getenv('RSTUDIO') == '1'){
   message('Running as SLURM batch')
   message('CPUs: ', cpus_per_task)
   message('task: ', task_id)
+  message('Iterations: ', R)
 }
 outfile <- file.path(boot_out_dir, paste0('bootstrap_', sprintf('%dk_', R/1e3), task_id, '.rds'))
 outfile.ci <- file.path(boot_out_dir, paste0('bootstrap_ci_', sprintf('%dk_', R/1e3), task_id, '.rds'))
@@ -53,8 +54,9 @@ form <- as.formula(paste0(left_side, right_side))
 
 d <- model.frame(formula = mf_form, data = hcpd_data)
 
-cl <- parallel::makePSOCKcluster(cpus_per_task)
+cl <- parallel::makePSOCKcluster(cpus_per_task - 1)
 
+message('Bootstrapping...')
 system.time({boot_fit <- boot(hcpd_data, 
                               statistic = gam_deriv_boot,
                               R = R,
@@ -63,12 +65,13 @@ system.time({boot_fit <- boot(hcpd_data,
                               form = form,
                               parallel = 'snow',
                               cl = cl,
-                              ncpus = cpus_per_task)})
+                              ncpus = cpus_per_task - 1)})
 
 saveRDS(object = boot_fit, file = outfile)
 
 parallel::clusterExport(cl = cl, 'boot_fit')
 
+message('Computing CIs...')
 ci <- parallel::parLapply(cl = cl, split(1:dim(boot_fit$t)[[2]], 1:cpus_per_task), function(chunk){
   lapply(chunk, function(index){
     library(boot)
@@ -83,7 +86,5 @@ ci <- parallel::parLapply(cl = cl, split(1:dim(boot_fit$t)[[2]], 1:cpus_per_task
 })
 
 saveRDS(object = ci, file = outfile.ci)
-
-stop(cl)
-
+message('Done!')
 

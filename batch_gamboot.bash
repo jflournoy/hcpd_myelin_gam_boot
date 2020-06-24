@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J gamboot
 #SBATCH --account somerville_lab
-#SBATCH --mem 5G
+#SBATCH --mem 20G
 #SBATCH -p ncf
 #SBATCH --cpus-per-task 10
 #SBATCH --nodes 1
