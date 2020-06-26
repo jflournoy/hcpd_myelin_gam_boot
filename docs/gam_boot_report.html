@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="John Flournoy" />
+
+<meta name="date" content="2020-06-26" />
+
+<title>Myelin Trajectories: GAM bootstrap</title>
+
+<script src="gam_boot_report_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="gam_boot_report_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="gam_boot_report_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="gam_boot_report_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="gam_boot_report_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="gam_boot_report_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="gam_boot_report_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="gam_boot_report_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="gam_boot_report_files/navigation-1.1/tabsets.js"></script>
+<script src="gam_boot_report_files/navigation-1.1/codefolding.js"></script>
+<link href="gam_boot_report_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="gam_boot_report_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Myelin Trajectories: GAM bootstrap</h1>
+<h4 class="author">John Flournoy</h4>
+<h4 class="date">2020-06-26</h4>
+
+</div>
+
+
+<pre class="r"><code>regindex &lt;- 1:400
+
+task_id &lt;- 0
+
+right_side &lt;- &#39;~ s(Age) + Sex + Scanner + numNavs_sum&#39;
+
+if(task_id == 0){
+  left_side &lt;- &#39;mean_wholebrain_T1wT2w&#39;
+} else {
+  left_side &lt;- paste0(&#39;myelin_schaefer_v&#39;, task_id)
+}
+
+mf_form &lt;- as.formula(paste0(left_side, gsub(&#39;s\\((.*)\\)&#39;, &#39;\\1&#39;, right_side)))
+form &lt;- as.formula(paste0(left_side, right_side))
+
+d &lt;- model.frame(formula = mf_form, data = hcpd_data)
+
+boot_fn &lt;- file.path(&#39;boot_out_dir&#39;, paste0(&#39;bootstrap_&#39;, sprintf(&#39;%dk_&#39;, 1e4/1e3), task_id, &#39;.rds&#39;))
+aboot &lt;- readRDS(boot_fn)
+boot_dt_fn &lt;- file.path(&#39;boot_out_dir&#39;, paste0(&#39;bootstrap_dt_&#39;, sprintf(&#39;%dk_&#39;, 1e4/1e3), task_id, &#39;.rds&#39;))
+
+boot_dt &lt;- readRDS(boot_dt_fn)
+boot_dt[, Age := age][, age := NULL]
+fit &lt;- mgcv::gam(form, data=d, method=&quot;REML&quot;)
+add_to_fit &lt;- coef(fit)[[&#39;(Intercept)&#39;]] + mean(d$numNavs_sum)*coef(fit)[[&#39;numNavs_sum&#39;]] + .5*coef(fit)[[&#39;SexM&#39;]]
+pred &lt;- data.table(
+  gratia::evaluate_smooth(
+    fit, &#39;Age&#39;, 
+    n = 500,
+    unconditional = TRUE))[, spline.est := est + add_to_fit][, est := NULL]
+
+data.table::setkey(pred, Age)
+data.table::setkey(boot_dt, Age)
+
+pred_boot &lt;- pred[boot_dt, roll = TRUE]</code></pre>
+<div id="whole-brain-plot" class="section level1">
+<h1>Whole brain plot</h1>
+<pre class="r"><code>ci_type &lt;- c(&#39;basic&#39; = &#39;Basic&#39;, &#39;bca&#39; = &#39;BCa&#39;)
+index_labels &lt;- c(&#39;501&#39; = &#39;Steepest age&#39;, &#39;502&#39; = &#39;Plateau age&#39;)
+index_color &lt;- c(&#39;501&#39; = apal[2], &#39;502&#39; = apal[4])
+p &lt;- lapply(names(ci_type), function(t){
+  ggplot(pred_boot[type == t], aes(x = Age, y = spline.est)) + 
+    geom_point(data = d, aes_string(x = &#39;Age&#39;, y = left_side), size = .75, alpha = .8, color = apal[[5]]) +
+    geom_ribbon(aes(ymin = spline.est - 2*se, ymax = spline.est + 2*se, fill = curve), alpha = .8) +
+    scale_fill_manual(limits = c(&#39;steepest&#39;, &#39;plateau&#39;), breaks = c(&#39;steepest&#39;, &#39;plateau&#39;), values = apal[c(2,4)]) + 
+    theme_minimal() + 
+    theme(panel.background = element_rect(fill = apal[[3]], size = 0)) + 
+    geom_line(color = apal[[1]]) + 
+    labs(title = ci_type[t], x = &#39;Age (years)&#39;, y = &#39;Myelin estimate&#39;)
+})
+pp &lt;- patchwork::wrap_plots(p, guides = &#39;collect&#39;)
+
+
+p2 &lt;- lapply(501:502, function(index){
+  ggplot(data.frame(x = aboot$t[,index]), aes(x = x)) + 
+    geom_histogram(bins = 100, fill = index_color[as.character(index)]) + 
+    theme_minimal() + 
+    theme(panel.background = element_rect(fill = apal[[3]], size = 0)) + 
+    labs(y = &#39;Count of bootstraps&#39;, x = &#39;Age (years)&#39;)
+})
+
+pp + patchwork::wrap_plots(p2, guides = &#39;collect&#39;, ncol = 1) + patchwork::plot_layout(widths = c(1, 1, .6))</code></pre>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+</div>
+<div id="plots-for-each-schaefer-region" class="section level1">
+<h1>Plots for each Schaefer region</h1>
+<p>Broken up into groups of ten.</p>
+<pre class="r"><code>for(chunk in split(regindex[1:40], f = rep(1:4, each = 10))){
+  ## Output
+  cat(paste0(&#39;\n\n## Regions &#39;, paste(range(chunk), collapse = &#39;-&#39;), &#39; {.tabset}\n\n&#39;))
+  
+  for(task_id in chunk){
+    # task_id &lt;- task_id[[1]]
+    ##Data prep
+    right_side &lt;- &#39;~ s(Age) + Sex + Scanner + numNavs_sum&#39;
+    left_side &lt;- paste0(&#39;myelin_schaefer_v&#39;, task_id)
+    mf_form &lt;- as.formula(paste0(left_side, gsub(&#39;s\\((.*)\\)&#39;, &#39;\\1&#39;, right_side)))
+    form &lt;- as.formula(paste0(left_side, right_side))
+    d &lt;- model.frame(formula = mf_form, data = hcpd_data)
+    
+    boot_fn &lt;- file.path(&#39;boot_out_dir&#39;, paste0(&#39;bootstrap_&#39;, sprintf(&#39;%dk_&#39;, 1e4/1e3), task_id, &#39;.rds&#39;))
+    boot_dt_fn &lt;- file.path(&#39;boot_out_dir&#39;, paste0(&#39;bootstrap_dt_&#39;, sprintf(&#39;%dk_&#39;, 1e4/1e3), task_id, &#39;.rds&#39;))
+    aboot &lt;- readRDS(boot_fn)
+    boot_dt &lt;- readRDS(boot_dt_fn)
+    boot_dt[, Age := age][, age := NULL]
+    fit &lt;- mgcv::gam(form, data=d, method=&quot;REML&quot;)
+    add_to_fit &lt;- coef(fit)[[&#39;(Intercept)&#39;]] + mean(d$numNavs_sum)*coef(fit)[[&#39;numNavs_sum&#39;]] + .5*coef(fit)[[&#39;SexM&#39;]]
+    
+    pred &lt;- data.table(
+      gratia::evaluate_smooth(
+        fit, &#39;Age&#39;, 
+        n = 500,
+        unconditional = TRUE))[, spline.est := est + add_to_fit][, est := NULL]
+    data.table::setkey(pred, Age)
+    data.table::setkey(boot_dt, Age)
+    pred_boot &lt;- pred[boot_dt, roll = TRUE]
+    
+    ## Output
+    cat(paste0(&#39;\n\n### &#39;, left_side, &#39;\n\n&#39;))
+    
+    ci_type &lt;- c(&#39;basic&#39; = &#39;Basic&#39;, &#39;bca&#39; = &#39;BCa&#39;)
+    index_labels &lt;- c(&#39;501&#39; = &#39;Steepest age&#39;, &#39;502&#39; = &#39;Plateau age&#39;)
+    index_color &lt;- c(&#39;501&#39; = apal[2], &#39;502&#39; = apal[4])
+    p &lt;- lapply(names(ci_type), function(t){
+      ggplot(pred_boot[type == t], aes(x = Age, y = spline.est)) + 
+        geom_point(data = d, aes_string(x = &#39;Age&#39;, y = left_side), size = .75, alpha = .8, color = apal[[5]]) +
+        geom_ribbon(aes(ymin = spline.est - 2*se, ymax = spline.est + 2*se, fill = curve), alpha = .8) +
+        scale_fill_manual(limits = c(&#39;steepest&#39;, &#39;plateau&#39;), breaks = c(&#39;steepest&#39;, &#39;plateau&#39;), values = apal[c(2,4)]) + 
+        theme_minimal() + 
+        theme(panel.background = element_rect(fill = apal[[3]], size = 0)) + 
+        geom_line(color = apal[[1]]) + 
+        labs(title = ci_type[t], x = &#39;Age (years)&#39;, y = &#39;Myelin estimate&#39;)
+    })
+    pp &lt;- patchwork::wrap_plots(p, guides = &#39;collect&#39;)
+    
+    
+    p2 &lt;- lapply(501:502, function(index){
+      ggplot(data.frame(x = aboot$t[,index]), aes(x = x)) + 
+        geom_histogram(bins = 100, fill = index_color[as.character(index)]) + 
+        theme_minimal() + 
+        theme(panel.background = element_rect(fill = apal[[3]], size = 0)) + 
+        labs(y = &#39;Count of bootstraps&#39;, x = &#39;Age (years)&#39;)
+    })
+    
+    print(pp + patchwork::wrap_plots(p2, guides = &#39;collect&#39;, ncol = 1) + patchwork::plot_layout(widths = c(1, 1, .6)))
+  }
+}</code></pre>
+<div id="regions-1-10" class="section level2 tabset">
+<h2>Regions 1-10</h2>
+<div id="myelin_schaefer_v1" class="section level3">
+<h3>myelin_schaefer_v1</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v2" class="section level3">
+<h3>myelin_schaefer_v2</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-2.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v3" class="section level3">
+<h3>myelin_schaefer_v3</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-3.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v4" class="section level3">
+<h3>myelin_schaefer_v4</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-4.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v5" class="section level3">
+<h3>myelin_schaefer_v5</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-5.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v6" class="section level3">
+<h3>myelin_schaefer_v6</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-6.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v7" class="section level3">
+<h3>myelin_schaefer_v7</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-7.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v8" class="section level3">
+<h3>myelin_schaefer_v8</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-8.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v9" class="section level3">
+<h3>myelin_schaefer_v9</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-9.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v10" class="section level3">
+<h3>myelin_schaefer_v10</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-10.png" width="960" /></p>
+</div>
+</div>
+<div id="regions-11-20" class="section level2 tabset">
+<h2>Regions 11-20</h2>
+<div id="myelin_schaefer_v11" class="section level3">
+<h3>myelin_schaefer_v11</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-11.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v12" class="section level3">
+<h3>myelin_schaefer_v12</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-12.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v13" class="section level3">
+<h3>myelin_schaefer_v13</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-13.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v14" class="section level3">
+<h3>myelin_schaefer_v14</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-14.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v15" class="section level3">
+<h3>myelin_schaefer_v15</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-15.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v16" class="section level3">
+<h3>myelin_schaefer_v16</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-16.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v17" class="section level3">
+<h3>myelin_schaefer_v17</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-17.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v18" class="section level3">
+<h3>myelin_schaefer_v18</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-18.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v19" class="section level3">
+<h3>myelin_schaefer_v19</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-19.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v20" class="section level3">
+<h3>myelin_schaefer_v20</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-20.png" width="960" /></p>
+</div>
+</div>
+<div id="regions-21-30" class="section level2 tabset">
+<h2>Regions 21-30</h2>
+<div id="myelin_schaefer_v21" class="section level3">
+<h3>myelin_schaefer_v21</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-21.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v22" class="section level3">
+<h3>myelin_schaefer_v22</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-22.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v23" class="section level3">
+<h3>myelin_schaefer_v23</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-23.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v24" class="section level3">
+<h3>myelin_schaefer_v24</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-24.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v25" class="section level3">
+<h3>myelin_schaefer_v25</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-25.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v26" class="section level3">
+<h3>myelin_schaefer_v26</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-26.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v27" class="section level3">
+<h3>myelin_schaefer_v27</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-27.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v28" class="section level3">
+<h3>myelin_schaefer_v28</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-28.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v29" class="section level3">
+<h3>myelin_schaefer_v29</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-29.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v30" class="section level3">
+<h3>myelin_schaefer_v30</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-30.png" width="960" /></p>
+</div>
+</div>
+<div id="regions-31-40" class="section level2 tabset">
+<h2>Regions 31-40</h2>
+<div id="myelin_schaefer_v31" class="section level3">
+<h3>myelin_schaefer_v31</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-31.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v32" class="section level3">
+<h3>myelin_schaefer_v32</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-32.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v33" class="section level3">
+<h3>myelin_schaefer_v33</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-33.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v34" class="section level3">
+<h3>myelin_schaefer_v34</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-34.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v35" class="section level3">
+<h3>myelin_schaefer_v35</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-35.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v36" class="section level3">
+<h3>myelin_schaefer_v36</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-36.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v37" class="section level3">
+<h3>myelin_schaefer_v37</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-37.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v38" class="section level3">
+<h3>myelin_schaefer_v38</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-38.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v39" class="section level3">
+<h3>myelin_schaefer_v39</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-39.png" width="960" /></p>
+</div>
+<div id="myelin_schaefer_v40" class="section level3">
+<h3>myelin_schaefer_v40</h3>
+<p><img src="gam_boot_report_files/figure-html/unnamed-chunk-3-40.png" width="960" /></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
