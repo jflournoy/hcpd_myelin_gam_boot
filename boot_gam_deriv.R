@@ -1,3 +1,4 @@
+stop('Bootstrapping is not recommended for GAMs with smooth terms.')
 library(mgcv) 
 library(gratia) 
 library(boot)
@@ -29,10 +30,10 @@ if(Sys.getenv('HOME') != '/users/jflournoy' || Sys.getenv('RSTUDIO') == '1'){
   message('task: ', task_id)
   message('Iterations: ', R)
 }
-outfile <- file.path(boot_out_dir, paste0('bootstrap_', sprintf('%dk_', R/1e3), task_id, '.rds'))
-outfile.ci <- file.path(boot_out_dir, paste0('bootstrap_ci_', sprintf('%dk_', R/1e3), task_id, '.rds'))
-outfile.dt <- file.path(boot_out_dir, paste0('bootstrap_dt_', sprintf('%dk_', R/1e3), task_id, '.rds'))
-outfile.plot <- file.path(png_out_dir, paste0('first_deriv_boot_', sprintf('%dk_', R/1e3), task_id, '.png'))
+outfile <- file.path(boot_out_dir, paste0('const_bootstrap_', sprintf('%dk_', R/1e3), task_id, '.rds'))
+outfile.ci <- file.path(boot_out_dir, paste0('const_bootstrap_ci_', sprintf('%dk_', R/1e3), task_id, '.rds'))
+outfile.dt <- file.path(boot_out_dir, paste0('const_bootstrap_dt_', sprintf('%dk_', R/1e3), task_id, '.rds'))
+outfile.plot <- file.path(png_out_dir, paste0('const_first_deriv_boot_', sprintf('%dk_', R/1e3), task_id, '.png'))
 
 gam_deriv_boot <- function(d, i, form){
   library(mgcv)
