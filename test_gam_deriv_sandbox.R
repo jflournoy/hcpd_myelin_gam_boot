@@ -55,7 +55,7 @@ fit_brm <- brms::brm(brms::bf(form),
                      data=d,
                      chains = 4, cores = 4,
                      iter = 4500, warmup = 2000,
-                     control = list(adapt_delta = .99, max_treedepth = 20),
+                     control = list(adapt_delta = .999, max_treedepth = 20),
                      file = 'fit_brm')
 
 
@@ -404,7 +404,7 @@ ggplot(deriv1_post_summary, aes(x = Age, y = deriv1)) +
 #' ### Age at maximum derivative
 #'
 bayesplot::color_scheme_set('purple')
-bayesplot::mcmc_areas(data.frame(max_age = deriv1_age_at_max_post$max_age, Chain = rep(1:4, each = 1000)),
+bayesplot::mcmc_areas(data.frame(max_age = deriv1_age_at_max_post$max_age, Chain = rep(1:4, each = 2500)),
                       prob = 0.95,
                       prob_outer = 0.99)
 
