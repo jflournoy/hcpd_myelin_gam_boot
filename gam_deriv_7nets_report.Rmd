@@ -22,7 +22,7 @@ pre code {
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-#https://www.instagram.com/p/CCJA-ikgKPv/
+#https://www.instagram.com/p/CCQvy_BAkWv/
 apal <- paste0('#', c('3A4965', 'EAE3D8', 'FAF8F2', 'C07D59', 'F99FC9'))
 library(brms)
 library(data.table)
