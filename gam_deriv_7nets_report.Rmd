@@ -1,0 +1,196 @@
+---
+title: "Myelin Trajectories in Seven Networks"
+author: "John Flournoy"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{css, echo=FALSE}
+@import url('https://fonts.googleapis.com/css?family=Didact+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fira+Code&display=swap');
+body{
+  font-family: 'Didact Gothic',  sans-serif;
+}
+pre code {
+  font-family: 'Fira Code',  monospace;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+#https://www.instagram.com/p/CCJA-ikgKPv/
+apal <- paste0('#', c('3A4965', 'EAE3D8', 'FAF8F2', 'C07D59', 'F99FC9'))
+library(brms)
+library(data.table)
+library(ggplot2)
+source('conditional_smooth_sample.R') #Loads functions for extracting posterior samples
+library(showtext)
+#{.tabset}
+font_add_google("Didact Gothic", "Didact Gothic")
+showtext_auto()
+
+jftheme <- theme_minimal() +  
+    theme(text = element_text(family = 'Didact Gothic', size = 14),
+          panel.background = element_rect(fill = apal[[3]], size = 0, color = apal[[2]]),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), 
+          strip.background = element_rect(fill = apal[[2]], size = 0),
+          strip.text = element_text(color = '#222222'),
+          axis.text =  element_text(color = apal[[1]]), axis.title = element_text(color = apal[[1]]))
+
+
+get_smooth_posterior <- function(fit_brm, res, eps, age_col = 'Age', smooths = 's(Age)', probs = c(0.025, 0.975)){
+  d <- fit_brm$data
+  smooth_values <- list(seq(min(d[, age_col]), max(d[, age_col]), length.out = res))
+  names(smooth_values) <- age_col
+  smooth_values_eps <- lapply(smooth_values, `+`, eps)
+  c_smooths_1 <- conditional_smooth_sample(fit_brm, smooths = smooths, 
+                                           smooth_values = smooth_values,
+                                           probs = probs,
+                                           spaghetti = TRUE)
+  c_smooths_2 <- conditional_smooth_sample(fit_brm, smooths = smooths, 
+                                           smooth_values = smooth_values_eps,
+                                           probs = probs,
+                                           spaghetti = TRUE)
+  
+  c_smooths_1_sample_data <- data.table(attr(c_smooths_1[[1]], 'spaghetti')) #the use of [[1]] here is not very extensible
+  c_smooths_2_sample_data <- data.table(attr(c_smooths_2[[1]], 'spaghetti'))
+  
+  c_smooths_1_sample_data[, estimate__eps := c_smooths_2_sample_data[,estimate__]]
+  c_smooths_1_sample_data[, deriv1 := (estimate__eps - estimate__) / eps]
+  return(c_smooths_1_sample_data)
+}
+get_smooth_summaries <- function(posterior_samples, probs = c(.025, .975), age_col = 'Age', smooth_col = 'estimate__', deriv1_col = 'deriv1', sample_index = 'sample__'){
+  smooth_post_summary <- posterior_samples[, list(est = median(get(smooth_col)),
+                                                  'lower' = quantile(get(smooth_col), probs = probs[[1]]), 
+                                                  'upper' = quantile(get(smooth_col), probs = probs[[2]])),
+                                           by = age_col]
+  
+  deriv1_post_summary <- posterior_samples[, list('deriv1' = median(get(deriv1_col)), 
+                                                  'lower' = quantile(get(deriv1_col), probs = probs[[1]]), 
+                                                  'upper' = quantile(get(deriv1_col), probs = probs[[2]])),
+                                           by = age_col]
+  
+  deriv1_age_at_max_post <- posterior_samples[, list('max_age' = Age[which(get(deriv1_col) == max(get(deriv1_col)))]),
+                                              by = sample_index]
+  age_at_max_med_deriv <- deriv1_post_summary[deriv1 == max(deriv1), get(age_col)]
+  deriv1_diff_from_max_post <- 
+    posterior_samples[, 
+                      diff_from_max := get(deriv1_col) - get(deriv1_col)[get(age_col) == age_at_max_med_deriv],
+                      by = sample_index]
+  deriv1_age_at_max_post_summary <- deriv1_age_at_max_post[, list('est' = median(max_age),
+                                                                  'lower' = quantile(max_age, probs = probs[[1]]), 
+                                                                  'upper' = quantile(max_age, probs = probs[[2]]))]
+  
+  deriv1_diff_from_max_post_summary <- deriv1_diff_from_max_post[, list('diff_from_max' = median(diff_from_max), 
+                                                                        'diff_lower' = quantile(diff_from_max, probs = probs[[1]]), 
+                                                                        'diff_upper' = quantile(diff_from_max, probs = probs[[2]])),
+                                                                 by = age_col]
+  deriv1_diff_from_max_post_summary[, compared_to_max := dplyr::case_when(diff_upper < 0 ~ 'less_steep',
+                                                                          diff_lower > 0 ~ 'steeper',
+                                                                          TRUE ~ 'as_steep')]
+  deriv1_diff_from_max_post_summary_cols <- c(age_col, 'compared_to_max', 'diff_from_max', 'diff_upper', 'diff_lower')
+  deriv1_post_summary <- 
+    deriv1_post_summary[deriv1_diff_from_max_post_summary[, ..deriv1_diff_from_max_post_summary_cols],
+                        on = age_col]
+  return(list(smooth = smooth_post_summary, derivative = deriv1_post_summary, max_deriv_age_posterior = deriv1_age_at_max_post))
+}
+
+
+#Age difference for finite differences
+eps = 1e-07
+#How many ages to get marginal posterior at -- doesn't need to be a lot, necessarily
+res = 50
+```
+
+```{r}
+#Read in data
+hcpd_data <- readr::read_csv("hcpd_n762_myelin_cog_data.csv")
+#Column names of myelin measurements from 7 networks
+seven_nets <- c('mean_wholebrain_T1wT2w', paste0('Yeo', 1:7, '_myelin')) #the first element is whole-brain
+
+model_list <- lapply(1:length(seven_nets), function(i){
+  right_side <- '~ s(Age) + Sex + Scanner + numNavs_sum'
+  left_side <- seven_nets[[i]]
+  
+  mf_form <- as.formula(paste0(left_side, gsub('s\\((.*)\\)', '\\1', right_side)))
+  form <- as.formula(paste0(left_side, right_side))
+  
+  d <- model.frame(formula = mf_form, data = hcpd_data)
+  
+  model_name <- ifelse(i == 1, 'fit_brm', paste0('fit_brm_', left_side))
+  if(!file.exists(paste0(model_name, '.rds'))){
+    fit_brm <- NULL
+  } else {
+    fit_brm <- readRDS(paste0(model_name, '.rds'))
+  }
+  return(fit_brm)
+})
+posterior_samples_list <- lapply(model_list, get_smooth_posterior, res, eps)
+results_summaries_list <- lapply(posterior_samples_list, get_smooth_summaries)
+```
+
+# Plots for each network
+
+```{r, results='asis'}
+for (i in 1:length(seven_nets)){
+
+  cat(paste0('\n\n## ', seven_nets[[i]], '{.tabset}\n\n'))  
+  
+  cat(paste0('\n\n### Derivative\n\n'))
+  cat('Age where the median posterior derivative is at its max is marked.\n\n')
+  
+  aderivative <- results_summaries_list[[i]]$derivative
+  anageatmax <- results_summaries_list[[i]]$max_deriv_age_posterior
+  asmooth <- results_summaries_list[[i]]$smooth
+  
+  age_at_max_med_deriv <- aderivative[deriv1 == max(deriv1), Age]
+  
+  print(ggplot(aderivative, aes(x = Age, y = deriv1)) + 
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 1, fill = apal[2]) +  
+    geom_segment(x = age_at_max_med_deriv, 
+                 xend = age_at_max_med_deriv, 
+                 y = aderivative[Age == age_at_max_med_deriv, lower],
+                 yend = aderivative[Age == age_at_max_med_deriv, upper], color = apal[[1]]) +
+    geom_line() + 
+    geom_line(aes(color = compared_to_max, group = 1), size = 2, alpha = .8) + 
+    geom_point(x = age_at_max_med_deriv, y = aderivative[Age == age_at_max_med_deriv, deriv1], color = apal[[1]], size = 2) +
+    scale_color_manual(breaks = c('less_steep', 'as_steep'), values = apal[c(4,5)], 
+                       labels = c('Less steep', 'As steep'),
+                       name = 'Region, as compared \nto maximum derivative, \nis...') +
+    jftheme)
+
+    cat(paste0('\n\n### Age at maximum derivative\n\n'))
+    
+    bayesplot::color_scheme_set('red')
+    print(bayesplot::mcmc_areas(data.frame(max_age = anageatmax$max_age, Chain = rep(1:4, each = 2500)),
+                          prob = 0.95,
+                          prob_outer = 0.99) + jftheme)
+    cat(paste0('\n\n### Difference from derivative at steepest age\n\n'))
+    
+    print(ggplot(aderivative, aes(x = Age, y = diff_from_max)) + 
+      geom_ribbon(aes(ymin = diff_lower, ymax = diff_upper), alpha = 1, fill = apal[2]) +  
+      geom_line(color = apal[[1]]) + 
+      geom_line(aes(color = compared_to_max, group = 1), size = 2, alpha = .8) + 
+      scale_color_manual(breaks = c('less_steep', 'as_steep'), values = apal[c(4,5)], 
+                         labels = c('Less steep', 'As steep'),
+                         name = 'Region, as compared \nto maximum derivative, \nis...') + 
+      jftheme)
+
+    cat(paste0('\n\n### Smooth estimate\n\n'))
+    
+    print(ggplot(asmooth[aderivative[, .(Age, compared_to_max)], on = 'Age'],
+           aes(x = Age, y = est)) + 
+      geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 1, fill = apal[2]) +  
+      geom_line() + 
+      geom_line(aes(color = compared_to_max, group = 1), size = 2, alpha = .8) + 
+      scale_color_manual(breaks = c('less_steep', 'as_steep'), values = apal[c(4,5)], 
+                         labels = c('Less steep', 'As steep'),
+                         name = 'Region, as compared \nto maximum derivative, \nis...') + 
+      jftheme)
+}
+```
