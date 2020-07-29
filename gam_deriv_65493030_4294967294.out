@@ -1,0 +1,776 @@
+running
+  '/n/helmod/apps/centos7/Core/R_core/3.5.1-fasrc01/lib64/R/bin/R --slave --no-restore --vanilla --file=gam_deriv_7nets.R'
+
+Loading required package: Rcpp
+This version of Shiny is designed to work with 'htmlwidgets' >= 1.5.
+    Please upgrade via install.packages('htmlwidgets').
+Loading 'brms' package (version 2.13.3). Useful instructions
+can be found by typing help('brms'). A more detailed introduction
+to the package is available through vignette('brms_overview').
+
+Attaching package: ‘brms’
+
+The following object is masked from ‘package:stats’:
+
+    ar
+
+Parsed with column specification:
+cols(
+  .default = col_double(),
+  Subject = col_character(),
+  Subj.ID = col_character(),
+  Visit = col_character(),
+  SubjSess = col_character(),
+  Project = col_character(),
+  Scanner = col_character(),
+  AgeAtV1 = col_integer(),
+  Sex = col_character(),
+  SubCortGrayVol = col_integer(),
+  BrainSegVol = col_integer(),
+  BrainSegVolNotVent = col_integer(),
+  SupraTentorialVolNotVentVox = col_integer(),
+  FS_SurfaceHoles = col_integer(),
+  numNavs_T1w = col_integer(),
+  numNavs_T2w = col_integer(),
+  site = col_integer(),
+  SES_RLVL = col_integer(),
+  numNavs_sum = col_integer(),
+  PIN = col_character(),
+  NIH.Toolbox.Dimensional.Change.Card.Sort.Test.Ages.3.7.v2.1 = col_character()
+  # ... with 15 more columns
+)
+See spec(...) for full column specifications.
+Estimating derivative for mean_wholebrain_T1wT2w
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Estimating derivative for Yeo1_myelin
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Compiling Stan program...
+Start sampling
+
+SAMPLING FOR MODEL 'f7ea8433d0066af62e1fd239d2e15866' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'f7ea8433d0066af62e1fd239d2e15866' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+
+SAMPLING FOR MODEL 'f7ea8433d0066af62e1fd239d2e15866' NOW (CHAIN 4).
+
+SAMPLING FOR MODEL 'f7ea8433d0066af62e1fd239d2e15866' NOW (CHAIN 3).
+Chain 4: 
+Chain 4: Gradient evaluation took 0 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: 
+Chain 3: Gradient evaluation took 0 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 4: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 3: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 3: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 3: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 2: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 2: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 123.31 seconds (Warm-up)
+Chain 3:                52.5 seconds (Sampling)
+Chain 3:                175.81 seconds (Total)
+Chain 3: 
+Chain 4: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 2: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 4: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 2: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 165.97 seconds (Warm-up)
+Chain 2:                46.83 seconds (Sampling)
+Chain 2:                212.8 seconds (Total)
+Chain 2: 
+Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 4: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 1: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 4: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 1: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 4: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 1: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 241.56 seconds (Warm-up)
+Chain 1:                51.36 seconds (Sampling)
+Chain 1:                292.92 seconds (Total)
+Chain 1: 
+Chain 4: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 229.85 seconds (Warm-up)
+Chain 4:                85.84 seconds (Sampling)
+Chain 4:                315.69 seconds (Total)
+Chain 4: 
+Estimating derivative for Yeo2_myelin
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Compiling Stan program...
+Start sampling
+
+SAMPLING FOR MODEL '6d2650c415f79ee34ef31f4fa999cf26' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL '6d2650c415f79ee34ef31f4fa999cf26' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL '6d2650c415f79ee34ef31f4fa999cf26' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL '6d2650c415f79ee34ef31f4fa999cf26' NOW (CHAIN 4).
+Chain 3: 
+Chain 3: Gradient evaluation took 0 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 4: 
+Chain 4: Gradient evaluation took 0 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 4: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 1: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 2: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 3: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 3: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 2: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 199.18 seconds (Warm-up)
+Chain 3:                53.74 seconds (Sampling)
+Chain 3:                252.92 seconds (Total)
+Chain 3: 
+Chain 1: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 209.48 seconds (Warm-up)
+Chain 2:                59.35 seconds (Sampling)
+Chain 2:                268.83 seconds (Total)
+Chain 2: 
+Chain 4: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 4: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 4: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 4: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 1: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 272.58 seconds (Warm-up)
+Chain 4:                53.12 seconds (Sampling)
+Chain 4:                325.7 seconds (Total)
+Chain 4: 
+Chain 1: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 1: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 207.38 seconds (Warm-up)
+Chain 1:                305.37 seconds (Sampling)
+Chain 1:                512.75 seconds (Total)
+Chain 1: 
+Estimating derivative for Yeo3_myelin
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Compiling Stan program...
+Start sampling
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 4).
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 3).
+Chain 4: 
+Chain 4: Gradient evaluation took 0 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 3: 
+Chain 3: Gradient evaluation took 0 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 4: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 1: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 4: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 1: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 1: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 4: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 1: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 188.03 seconds (Warm-up)
+Chain 1:                53.57 seconds (Sampling)
+Chain 1:                241.6 seconds (Total)
+Chain 1: 
+Chain 4: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 3: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 4: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 3: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 4: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 4: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 3: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 229.65 seconds (Warm-up)
+Chain 4:                50.45 seconds (Sampling)
+Chain 4:                280.1 seconds (Total)
+Chain 4: 
+Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 231.95 seconds (Warm-up)
+Chain 3:                50.01 seconds (Sampling)
+Chain 3:                281.96 seconds (Total)
+Chain 3: 
+Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 2: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 2: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 2: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 2: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 2: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 307.45 seconds (Warm-up)
+Chain 2:                104.1 seconds (Sampling)
+Chain 2:                411.55 seconds (Total)
+Chain 2: 
+Estimating derivative for Yeo4_myelin
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Compiling Stan program...
+recompiling to avoid crashing R session
+Start sampling
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 4).
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 3).
+Chain 4: 
+Chain 4: Gradient evaluation took 0 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 3: 
+Chain 3: Gradient evaluation took 0 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 3: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 4: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 4: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 1: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 1: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 3: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 2: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 2: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 1: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 193.63 seconds (Warm-up)
+Chain 3:                69.03 seconds (Sampling)
+Chain 3:                262.66 seconds (Total)
+Chain 3: 
+Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 210.11 seconds (Warm-up)
+Chain 1:                53.8 seconds (Sampling)
+Chain 1:                263.91 seconds (Total)
+Chain 1: 
+Chain 2: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 2: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 4: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 2: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 2: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 247.03 seconds (Warm-up)
+Chain 2:                52.76 seconds (Sampling)
+Chain 2:                299.79 seconds (Total)
+Chain 2: 
+Chain 4: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 251.13 seconds (Warm-up)
+Chain 4:                55.57 seconds (Sampling)
+Chain 4:                306.7 seconds (Total)
+Chain 4: 
+Estimating derivative for Yeo5_myelin
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Compiling Stan program...
+recompiling to avoid crashing R session
+Start sampling
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0.01 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 100 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 4).
+Chain 4: 
+Chain 4: Gradient evaluation took 0 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 
+4: 
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 3).
+Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: 
+Chain 3: Gradient evaluation took 0 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 4: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 4: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 4: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 4: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 4: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 4: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 4: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 3: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 2: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 4: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 3: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 3: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 2: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 4: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 181.81 seconds (Warm-up)
+Chain 3:                50.19 seconds (Sampling)
+Chain 3:                232 seconds (Total)
+Chain 3: 
+Chain 2: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 4: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 149.58 seconds (Warm-up)
+Chain 4:                99.99 seconds (Sampling)
+Chain 4:                249.57 seconds (Total)
+Chain 4: 
+Chain 1: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 168.27 seconds (Warm-up)
+Chain 2:                92.91 seconds (Sampling)
+Chain 2:                261.18 seconds (Total)
+Chain 2: 
+Chain 1: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 1: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 1: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 250.49 seconds (Warm-up)
+Chain 1:                100.32 seconds (Sampling)
+Chain 1:                350.81 seconds (Total)
+Chain 1: 
+Estimating derivative for Yeo6_myelin
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Compiling Stan program...
+recompiling to avoid crashing R session
+Start sampling
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 4
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN ).
+3).
+Chain 4: 
+Chain 4: Gradient evaluation took 0 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 3: 
+Chain 3: Gradient evaluation took 0 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 4: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 2: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 2: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 172.85 seconds (Warm-up)
+Chain 2:                50.39 seconds (Sampling)
+Chain 2:                223.24 seconds (Total)
+Chain 2: 
+Chain 4: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 4: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 1: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 4: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 1: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 4: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 3: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 4: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 3: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 4: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 245.3 seconds (Warm-up)
+Chain 4:                54.76 seconds (Sampling)
+Chain 4:                300.06 seconds (Total)
+Chain 4: 
+Chain 3: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 1: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 257.78 seconds (Warm-up)
+Chain 1:                72.8 seconds (Sampling)
+Chain 1:                330.58 seconds (Total)
+Chain 1: 
+Chain 3: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 286.29 seconds (Warm-up)
+Chain 3:                65.76 seconds (Sampling)
+Chain 3:                352.05 seconds (Total)
+Chain 3: 
+Estimating derivative for Yeo7_myelin
+Setting resolution for derivative across ages 8-22 to 50 increments of 0.3 years each.
+Compiling Stan program...
+recompiling to avoid crashing R session
+Start sampling
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL 'df115e5687ca8a330cf9eeaa95a559be' NOW (CHAIN 4).
+Chain 4: 
+Chain 4: Gradient evaluation took 0 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 3: 
+Chain 3: Gradient evaluation took 0 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 4: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 2: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 2: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 2: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 2: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 2: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 4: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 2: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 162 seconds (Warm-up)
+Chain 2:                51.11 seconds (Sampling)
+Chain 2:                213.11 seconds (Total)
+Chain 2: 
+Chain 4: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 4: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+Chain 1: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+Chain 4: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration: 1800 / 4500 [ 40%]  (Warmup)
+Chain 1: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 3: Iteration: 2001 / 4500 [ 44%]  (Sampling)
+Chain 4: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 3: Iteration: 2450 / 4500 [ 54%]  (Sampling)
+Chain 1: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 4: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 3: Iteration: 2900 / 4500 [ 64%]  (Sampling)
+Chain 3: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 1: Iteration: 3350 / 4500 [ 74%]  (Sampling)
+Chain 4: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 3800 / 4500 [ 84%]  (Sampling)
+Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 278.55 seconds (Warm-up)
+Chain 3:                54.77 seconds (Sampling)
+Chain 3:                333.32 seconds (Total)
+Chain 3: 
+Chain 4: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 4: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 241.45 seconds (Warm-up)
+Chain 4:                103.22 seconds (Sampling)
+Chain 4:                344.67 seconds (Total)
+Chain 4: 
+Chain 1: Iteration: 4250 / 4500 [ 94%]  (Sampling)
+Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 255.15 seconds (Warm-up)
+Chain 1:                104.69 seconds (Sampling)
+Chain 1:                359.84 seconds (Total)
+Chain 1: 
