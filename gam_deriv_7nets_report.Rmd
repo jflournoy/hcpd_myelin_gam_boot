@@ -138,7 +138,8 @@ results_summaries_list <- lapply(posterior_samples_list, get_smooth_summaries)
 
 ```{r, results='asis'}
 for (i in 1:length(seven_nets)){
-
+  include_points <- TRUE #overlay points on smooth plots
+  
   cat(paste0('\n\n## ', seven_nets[[i]], '{.tabset}\n\n'))  
   
   cat(paste0('\n\n### Derivative\n\n'))
@@ -147,9 +148,29 @@ for (i in 1:length(seven_nets)){
   aderivative <- results_summaries_list[[i]]$derivative
   anageatmax <- results_summaries_list[[i]]$max_deriv_age_posterior
   asmooth <- results_summaries_list[[i]]$smooth
-  
   age_at_max_med_deriv <- aderivative[deriv1 == max(deriv1), Age]
   
+  #In order to put the smooth on the same scale as the data, we need to add back
+  #in the mean of the response variable that brms uses to compute the
+  #conditional effect of the smooth. The easiest way to do this is to use the
+  #output of the conditional effects output. We don't really care about the effect across
+  #age so we can get the output at an arbitrary age:
+  
+  ce <- conditional_effects(model_list[[i]], effects = 'Age', 
+                            int_conditions = list('Age' = c(8)))
+  #get the model frame too, so we can plot the points to confirm this works.
+  mf <- brms:::model.frame.brmsfit(model_list[[i]])
+  
+  #We want to reference the mean of the response variable, which I've set up to
+  #be in the list `seven_nets`. I'm naming the variable `response_mf_mean` to
+  #indicate that this is the mean of the response as determined by brms from the
+  #model frame (`mf`) that it uses to estimate the model.
+  response_mf_mean <- ce$Age[[seven_nets[[i]]]]
+  
+  #We now need to add the response variable mean to the smooth estimates, but we
+  #only need to do that for the plot of the smooth---the derivative is already
+  #in the correct units (change in mylenation over age) and does not need to be
+  #adjusted. See below....
   print(ggplot(aderivative, aes(x = Age, y = deriv1)) + 
     geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 1, fill = apal[2]) +  
     geom_segment(x = age_at_max_med_deriv, 
@@ -183,14 +204,23 @@ for (i in 1:length(seven_nets)){
 
     cat(paste0('\n\n### Smooth estimate\n\n'))
     
+    mf_points <- NULL
+    if(include_points){
+      mf_points <- geom_point(data = mf, aes_string(y = seven_nets[[i]]), alpha = .15)
+    }
+    
+    #This is where we finally plot the smooth! So it's the correct place to add
+    #in the mean of the response. We have to add it to both the line and the ribbon.
     print(ggplot(asmooth[aderivative[, .(Age, compared_to_max)], on = 'Age'],
-           aes(x = Age, y = est)) + 
-      geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 1, fill = apal[2]) +  
-      geom_line() + 
-      geom_line(aes(color = compared_to_max, group = 1), size = 2, alpha = .8) + 
-      scale_color_manual(breaks = c('less_steep', 'as_steep'), values = apal[c(4,5)], 
-                         labels = c('Less steep', 'As steep'),
-                         name = 'Region, as compared \nto maximum derivative, \nis...') + 
-      jftheme)
+           aes(x = Age, y = est + response_mf_mean)) + 
+            mf_points +
+            geom_ribbon(aes(ymin = lower + response_mf_mean, ymax = upper + response_mf_mean), alpha = 1, fill = apal[2]) +  
+            geom_line() + 
+            geom_line(aes(color = compared_to_max, group = 1), size = 2, alpha = .8) + 
+            scale_color_manual(breaks = c('less_steep', 'as_steep'), values = apal[c(4,5)], 
+                               labels = c('Less steep', 'As steep'),
+                               name = 'Region, as compared \nto maximum derivative, \nis...') + 
+            labs(y = 'est') + 
+            jftheme)
 }
 ```
