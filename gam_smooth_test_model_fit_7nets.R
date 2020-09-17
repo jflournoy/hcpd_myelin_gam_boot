@@ -43,7 +43,7 @@ NADA <- lapply(1:length(seven_nets), function(i){
   if(file.exists(paste0(model_name_l, '.rds'))){
     fit_brm_l <- readRDS(paste0(model_name_l, '.rds'))
   } else {
-    message('Sampling linear age model for comparison to GAM.\nModel forumla: ', mf_form_l)
+    message('Sampling linear age model for comparison to GAM.\nModel forumla: ', mf_form_s)
     fit_brm_l <- brms::brm(brms::bf(form_l), 
                            data=d,
                            chains = ncpus, cores = ncpus,
